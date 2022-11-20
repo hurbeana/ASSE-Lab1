@@ -94,7 +94,7 @@ vuln_heapcorruption-elite:
 
 # The grading robot will set the permissions of the vulnerable programs using the 'install' target.
 
-vuln_programs =  vuln_stackoverflow-entry vuln_stackoverflow-medium vuln_stackoverflow-advanced vuln_stackoverflow-elite
+vuln_programs =  vuln_stackoverflow-medium 
 vuln_programs += vuln_formatstring-entry vuln_formatstring-medium vuln_formatstring-advanced vuln_formatstring-elite
 vuln_programs += vuln_heapcorruption-entry vuln_heapcorruption-medium vuln_heapcorruption-advanced vuln_heapcorruption-elite
 
