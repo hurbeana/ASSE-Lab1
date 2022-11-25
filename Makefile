@@ -24,7 +24,7 @@ LEVEL_ELITE = -fstack-protector-all -D_FORTIFY_SOURCE=2 -z relro -z now -fpie -p
 
 
 CFLAGS = -m32 -g  -O0
-CFLAGS64 = -m64 -g -O0 -static
+CFLAGS64 = -m64 -g -O0 # -static
 
 # The grading robot will set the permissions of the vulnerable programs using the 'install' target.
 
@@ -40,7 +40,7 @@ vuln_stackoverflow-entry:
 
 # Another example that shows a vulnerable program based on a real-world vulnerability
 vuln_stackoverflow-medium: vuln_stackoverflow-medium.c
-	$(GCC) $(CFLAGS) $(LEVEL_MEDIUM) -o $@ $<
+	$(GCC) $(CFLAGS) $(LEVEL_ENTRY) -o $@ $<
 
 vuln_stackoverflow-advanced:
 	@echo 'NOT IMPLEMENTED'
