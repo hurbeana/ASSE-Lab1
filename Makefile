@@ -23,7 +23,7 @@ CLANG=/usr/bin/clang
 LEVEL_ELITE = -fstack-protector-all -D_FORTIFY_SOURCE=2 -z relro -z now -fpie -pie -flto -fsanitize=cfi -fsanitize=safe-stack -fuse-ld=gold
 
 
-CFLAGS = -m32 -g  -O0
+CFLAGS = -m32 -g  -O0 -Xlinker -rpath=/home/jonas/asse/ASSE-Lab1
 CFLAGS64 = -m64 -g -O0 # -static
 
 
