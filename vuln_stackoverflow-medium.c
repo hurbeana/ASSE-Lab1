@@ -32,11 +32,11 @@ void svcunix_create_vuln(char *path)
 
 int main(int argc, char **argv)
 {
-  char input_buffer[500];
+  char* input_buffer = (char*)malloc(500);
   scanf("%499s", input_buffer);
 
   svcunix_create_vuln(input_buffer);
-
+  free(input_buffer);
   return 0;
 }
 int goal(){
