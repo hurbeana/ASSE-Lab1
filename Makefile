@@ -112,7 +112,7 @@ exploit_stackoverflow-entry: exploit_stackoverflow-entry.py vuln_stackoverflow-e
 	./exploit_stackoverflow-entry.py'
 
 exploit_stackoverflow-medium: vuln_stackoverflow-medium
-	@echo 'NOT IMPLEMENTED'
+	python3 exploit.py
 
 exploit_stackoverflow-advanced: vuln_stackoverflow-advanced
 	@echo 'NOT IMPLEMENTED'
