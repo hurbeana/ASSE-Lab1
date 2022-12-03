@@ -28,15 +28,15 @@ CFLAGS64 = -m64 -g -O0 -static
 
 # The grading robot will set the permissions of the vulnerable programs using the 'install' target.
 
-vuln_programs =  vuln_stackoverflow-medium vuln_formatstring-medium
+vuln_programs =  vuln_stackoverflow-medium vuln_heapcorruption-entry
 
 install: $(vuln_programs)
 	$(foreach vuln_program, $(vuln_programs), [ -e $(vuln_program) ] && ( sudo chown privileged $(vuln_program) ) || true ;)
 	$(foreach vuln_program, $(vuln_programs), [ -e $(vuln_program) ] && ( sudo chmod u+s $(vuln_program) ) || true ;)
 
 # As an example, we have implemented the following target
-vuln_stackoverflow-entry: vuln_stackoverflow-entry.c
-	$(GCC) $(CFLAGS) $(LEVEL_ENTRY) -o $@ $<
+vuln_stackoverflow-entry:
+	@echo 'NOT IMPLEMENTED'
 
 # Another example that shows a vulnerable program based on a real-world vulnerability
 vuln_stackoverflow-medium: vuln_stackoverflow-medium.c
@@ -59,8 +59,8 @@ vuln_stackoverflow-elite:
 vuln_formatstring-entry:
 	@echo 'NOT IMPLEMENTED'
 
-vuln_formatstring-medium: vuln_formatstring-medium.c
-	$(GCC) $(CFLAGS) $(LEVEL_ENTRY) -o $@ $<
+vuln_formatstring-medium: 
+	@echo 'NOT IMPLEMENTED'
 
 vuln_formatstring-advanced:
 	@echo 'NOT IMPLEMENTED'
@@ -77,9 +77,8 @@ vuln_formatstring-elite:
 # Each implemented target must remove the 'NOT IMPLEMENTED' output, and produce
 # an executable that has the same name as the target identifier.
 
-# As a further example, we show how an old heap manager (dlmalloc, from 2002) can be used
-vuln_heapcorruption-entry: vuln_heapcorruption-entry.c dlmalloc/lib/libmalloc.a
-	$(GCC) $(CFLAGS64) $(LEVEL_ENTRY) -o $@ $^
+vuln_heapcorruption-entry: vuln_heapcorruption-entry.c
+	$(GCC) $(CFLAGS) $(LEVEL_ENTRY) -o $@ $<
 
 dlmalloc/lib/libmalloc.a: dlmalloc
 	$(MAKE) -C $<
@@ -107,8 +106,9 @@ exploit_stackoverflow-entry: exploit_stackoverflow-entry.py vuln_stackoverflow-e
 	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
 	./exploit_stackoverflow-entry.py'
 
-exploit_stackoverflow-medium: vuln_stackoverflow-medium
-	@echo 'NOT IMPLEMENTED'
+exploit_stackoverflow-medium: exploit_stackoverflow-entry.py vuln_stackoverflow-medium
+	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
+	./exploit_stackoverflow-entry.py'
 
 exploit_stackoverflow-advanced: vuln_stackoverflow-advanced
 	@echo 'NOT IMPLEMENTED'
