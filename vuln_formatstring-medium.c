@@ -1,29 +1,43 @@
+#include <string.h>
 #include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <sys/un.h>
+#include <stdlib.h>
 #include <stdbool.h>
-#include <rpc/svc.h>
-#include <rpc/rpc.h>
+
+struct ta_header {
+    size_t size;                // size of the user allocation
+    // Invariant: parent!=NULL => prev==NULL
+    struct ta_header *prev;     // siblings list (by destructor order)
+    struct ta_header *next;
+    // Invariant: parent==NULL || parent->child==this
+    struct ta_header *child;    // points to first child
+    struct ta_header *parent;   // set for _first_ child only, NULL otherwise
+    void (*destructor)();
+};
 
 /**
  * Vulnerable function. Unused function parameters removed and replaced by input from stdin for exploitation
  */
 void create_vuln(char *filename)
 {
-  int count = 0;
-  char *fname = talloc_size(mf, strlen(filename) + 32);
+  char *fname = malloc(strlen(filename));
+  struct ta_header *h = malloc(sizeof(struct ta_header));
 
-  sprintf(fname, filename, count++);
+  sprintf(fname, filename);
+  printf("%s", fname);
+  
+  if(h->destructor)
+	  h->destructor();
+}
+
+void wrapper(char * fname){
+	create_vuln(fname);
 }
 
 int main(int argc, char **argv)
 {
   if (argc > 1)
   {
-    create_vuln(argv[1]);
+    wrapper(argv[1]);
   }
 
   return 0;

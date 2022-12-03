@@ -26,6 +26,13 @@ LEVEL_ELITE = -fstack-protector-all -D_FORTIFY_SOURCE=2 -z relro -z now -fpie -p
 CFLAGS = -m32 -g  -O0
 CFLAGS64 = -m64 -g -O0 -static
 
+# The grading robot will set the permissions of the vulnerable programs using the 'install' target.
+
+vuln_programs =  vuln_stackoverflow-medium vuln_formatstring-medium
+
+install: $(vuln_programs)
+	$(foreach vuln_program, $(vuln_programs), [ -e $(vuln_program) ] && ( sudo chown privileged $(vuln_program) ) || true ;)
+	$(foreach vuln_program, $(vuln_programs), [ -e $(vuln_program) ] && ( sudo chmod u+s $(vuln_program) ) || true ;)
 
 # As an example, we have implemented the following target
 vuln_stackoverflow-entry: vuln_stackoverflow-entry.c
@@ -33,7 +40,7 @@ vuln_stackoverflow-entry: vuln_stackoverflow-entry.c
 
 # Another example that shows a vulnerable program based on a real-world vulnerability
 vuln_stackoverflow-medium: vuln_stackoverflow-medium.c
-	$(GCC) $(CFLAGS) $(LEVEL_MEDIUM) -o $@ $<
+	$(GCC) $(CFLAGS) $(LEVEL_MEDIUM)) -o $@ $<
 
 vuln_stackoverflow-advanced:
 	@echo 'NOT IMPLEMENTED'
@@ -52,8 +59,8 @@ vuln_stackoverflow-elite:
 vuln_formatstring-entry:
 	@echo 'NOT IMPLEMENTED'
 
-vuln_formatstring-medium:
-	@echo 'NOT IMPLEMENTED'
+vuln_formatstring-medium: vuln_formatstring-medium.c
+	$(GCC) $(CFLAGS) $(LEVEL_ENTRY) -o $@ $<
 
 vuln_formatstring-advanced:
 	@echo 'NOT IMPLEMENTED'
@@ -90,17 +97,6 @@ vuln_heapcorruption-advanced:
 
 vuln_heapcorruption-elite:
 	@echo 'NOT IMPLEMENTED'
-
-
-# The grading robot will set the permissions of the vulnerable programs using the 'install' target.
-
-vuln_programs =  vuln_stackoverflow-medium 
-vuln_programs += vuln_formatstring-entry vuln_formatstring-medium vuln_formatstring-advanced vuln_formatstring-elite
-vuln_programs += vuln_heapcorruption-entry vuln_heapcorruption-medium vuln_heapcorruption-advanced vuln_heapcorruption-elite
-
-install: $(vuln_programs)
-	$(foreach vuln_program, $(vuln_programs), [ -e $(vuln_program) ] && ( sudo chown privileged $(vuln_program) ) || true ;)
-	$(foreach vuln_program, $(vuln_programs), [ -e $(vuln_program) ] && ( sudo chmod u+s $(vuln_program) ) || true ;)
 	
 
 # Implement, similarly, your chosen exploit targets
