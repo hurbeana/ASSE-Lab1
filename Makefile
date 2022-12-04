@@ -40,7 +40,7 @@ vuln_stackoverflow-entry:
 
 # Another example that shows a vulnerable program based on a real-world vulnerability
 vuln_stackoverflow-medium: vuln_stackoverflow-medium.c
-	$(GCC) $(CFLAGS) $(LEVEL_MEDIUM)) -o $@ $<
+	$(GCC) $(CFLAGS) $(LEVEL_MEDIUM) -o $@ $<
 
 vuln_stackoverflow-advanced:
 	@echo 'NOT IMPLEMENTED'
