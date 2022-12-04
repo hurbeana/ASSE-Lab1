@@ -131,7 +131,7 @@ exploit_formatstring-elite: vuln_formatstring-elite
 
 exploit_heapcorruption-entry: exploit_heapcorruption-entry.py vuln_heapcorruption-entry
 	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
-	./exploit_heapcorruption-entry.py'
+	python exploit_heapcorruption-entry.py'
 
 exploit_heapcorruption-medium: vuln_heapcorruption-medium
 	@echo 'NOT IMPLEMENTED'
