@@ -104,12 +104,12 @@ vuln_heapcorruption-elite:
 # As an example, we have implemented the following target
 exploit_stackoverflow-entry: exploit_stackoverflow-entry.py vuln_stackoverflow-entry
 	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
-	./exploit_stackoverflow-entry.py'
+	python exploit_stackoverflow-entry.py'
 
 exploit_stackoverflow-medium: exploit_stackoverflow-medium.py vuln_stackoverflow-medium
 	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
 	pip install angr angrop claripy; \
-	./exploit_stackoverflow-medium.py'
+	python exploit_stackoverflow-medium.py'
 
 exploit_stackoverflow-advanced: vuln_stackoverflow-advanced
 	@echo 'NOT IMPLEMENTED'
