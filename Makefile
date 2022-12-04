@@ -108,7 +108,7 @@ exploit_stackoverflow-entry: exploit_stackoverflow-entry.py vuln_stackoverflow-e
 
 exploit_stackoverflow-medium: exploit_stackoverflow-medium.py vuln_stackoverflow-medium
 	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
-	pip install angr; \
+	pip install angr angrop claripy; \
 	./exploit_stackoverflow-medium.py'
 
 exploit_stackoverflow-advanced: vuln_stackoverflow-advanced
