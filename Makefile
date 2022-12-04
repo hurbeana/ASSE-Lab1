@@ -106,9 +106,10 @@ exploit_stackoverflow-entry: exploit_stackoverflow-entry.py vuln_stackoverflow-e
 	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
 	./exploit_stackoverflow-entry.py'
 
-exploit_stackoverflow-medium: exploit_stackoverflow-entry.py vuln_stackoverflow-medium
+exploit_stackoverflow-medium: exploit_stackoverflow-medium.py vuln_stackoverflow-medium
 	/bin/bash -c 'source /home/vagrant/python-venv/pwn3/bin/activate; \
-	./exploit_stackoverflow-entry.py'
+	pip install angr; \
+	./exploit_stackoverflow-medium.py'
 
 exploit_stackoverflow-advanced: vuln_stackoverflow-advanced
 	@echo 'NOT IMPLEMENTED'
