@@ -18,16 +18,11 @@ void svcunix_create_vuln(char *path)
   struct unix_rendezvous *r;
   struct sockaddr_un addr;
   socklen_t len = sizeof(struct sockaddr_in);
-  //scanf("%s",sun_path);
-  //len = strlen(path) + 1;
-  //memcpy(simplebuf, path, len);
 
-  //memset(&addr, '\0', sizeof(addr));
+  memset(&addr, '\0', sizeof(addr));
+  addr.sun_family = AF_UNIX;
   len = strlen(path) + 1;
   memcpy(addr.sun_path, path, len);
-  
-  //addr.sun_family = AF_UNIX;
-  //len += sizeof(addr.sun_family);
 }
 
 int main(int argc, char **argv)
@@ -38,7 +33,4 @@ int main(int argc, char **argv)
   svcunix_create_vuln(input_buffer);
   free(input_buffer);
   return 0;
-}
-int goal(){
-  printf("great");
 }
